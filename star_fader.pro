@@ -14,3 +14,6 @@ SOURCES += main.cpp
 
 SOURCES += MosqConnect.cpp
 HEADERS += MosqConnect.h
+
+SOURCES += rpiPWM1.cpp
+HEADERS += rpiPWM1.h
