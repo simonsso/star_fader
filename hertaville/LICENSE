@@ -1,0 +1,14 @@
+/***********************************************************************
+ * Author: Hussam al-Hertani (Hertaville.com)
+ * Others are free to modify and use this code as they see fit so long as they
+ * give credit to the author.
+ * 
+ * The author is not liable for any kind of damage caused by this software. 
+ * 
+ * Acknowledgements: This 'C++' class is based on 'C' code available from :
+ * - code from http://elinux.org/RPi_Low-level_peripherals 
+ * - http://www.raspberrypi.org/phpBB3/viewtopic.php?t=8467&p=124620 for PWM initialization
+ * - frank's code...http://www.frank-buss.de/raspberrypi/pwm.c
+ * - Gertboard's C source code 
+ * 
+ * *********************************************************************/
