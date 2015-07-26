@@ -25,22 +25,17 @@
 #define  __MOSQCONNECT_H
 
 #include <mosquittopp.h>
-#include "WeekTimer.h"
-#include "SQLiteWrapper.h"
 
 class MosqConnect : public mosqpp::mosquittopp
 {
     private:
-        QList<WeekTimer> *list;
-        SQLiteWrapper *dblite;
 
     public:
         MosqConnect(
                 const char *id,
                 const char *host,
-                int port,
-                QList<WeekTimer> *list,
-                SQLiteWrapper *db);
+                int port
+                );
         ~MosqConnect();
 
         void on_connect(int rc);

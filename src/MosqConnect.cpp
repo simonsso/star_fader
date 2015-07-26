@@ -34,13 +34,15 @@
 
 #include "MosqConnect.h"
 
+MosqConnect::~MosqConnect()
+{
+}
 MosqConnect::MosqConnect(
         const char *id,
         const char *host,
         int port
         ) : mosquittopp(id)
 {
-    this->list = list;
     int keepalive = 60;
 
     // Connect immediately.
@@ -52,7 +54,7 @@ void MosqConnect::on_connect(int rc)
     printf("Connected with code %d.\n", rc);
     if(rc == 0){
         // Only attempt to subscribe on a successful connect.
-	subscribe(NULL,"/star/fade/");
+	subscribe(NULL,"/starfader/");
     }
 }
 

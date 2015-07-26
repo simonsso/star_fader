@@ -35,7 +35,6 @@
 int main()
 {
     qDebug() << "example";
-    tdInit();
 
     class MosqConnect *mqtt;
     int rc;
@@ -45,7 +44,7 @@ int main()
     mqtt = new MosqConnect(
             "star_fader",
             "localhost",
-            1883,
+            1883
             );
     while(1)
     {
