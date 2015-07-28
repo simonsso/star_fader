@@ -12,7 +12,6 @@ targetvalues::~targetvalues(){
 
 void targetvalues::setT(int target){
     targetvalue=target;
-    qDebug()<<"Taregetvalue: "<<target;
 }
 int targetvalues::getT(){
     return(targetvalue);

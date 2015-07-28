@@ -78,7 +78,7 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
     memcpy(messData, message->payload, message->payloadlen);
     messData[message->payloadlen] = '\0';
 
-    printf("Message %s - %s.\n", message->topic, messData);
+    //printf("Message %s - %s.\n", message->topic, messData);
 
     QString mess = QString(messData);
     free(messData);
@@ -86,7 +86,7 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
     QString topic = QString(message->topic);
     QString topicOut = QString("/starfader_status/");
 
-    qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
+    //qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
                 QRegExp rxForce("fade (ON|OFF|AUTO) ([0-9]{1,})");
                 if (mess.compare("status") == 0)
@@ -97,7 +97,7 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
                 }
                 else if(rxForce.indexIn(mess) != -1)
                 {
-                    qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2) << rxForce.cap(2).toInt();
+                    //qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2) << rxForce.cap(2).toInt();
                     if(0==rxForce.cap(1).compare("ON")){
                         t->setT(rxForce.cap(2).toInt());
                     } else if(0==rxForce.cap(1).compare("OFF")){
