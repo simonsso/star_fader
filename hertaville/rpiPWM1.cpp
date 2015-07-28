@@ -66,7 +66,7 @@ rpiPWM1::rpiPWM1(double Hz, unsigned int cnts, double duty, int m)
   this->gpio = mapRegAddr(GPIO_BASE);
   this->pwm = mapRegAddr(PWM_BASE);
   
-   if( (cnts < 0) || (cnts > UINT_MAX) ) {
+   if( (cnts <= 0) || (cnts > UINT_MAX) ) {
    printf("counts value must be between 0-%d\n",UINT_MAX);
    exit(1);
   }
@@ -187,6 +187,7 @@ unsigned int rpiPWM1::setCounts(const unsigned int &cnts){
   return retVal;
 }
 
+
 /***********************************************************************
  * unsigned int rpiPWM1::setDutyCycle(const double &duty)
  * This function sets the PWM DutyCycle while the PWM peripheral is running.
@@ -264,7 +265,7 @@ unsigned int rpiPWM1::setDutyCycleCount(const unsigned int &dutyCycleCnts ){
     retVal = ERRDUTY;
 	}
 	else{
-		this->dutyCycle = ((dutyCycleCnts * 1.0)/ this->counts) * 100.0;
+		this->dutyCycle = ((dutyCycleCnts * 100.0)/ this->counts);
 		*(pwm + PWM_DAT1) = dutyCycleCnts;
 	}
 	return retVal;  

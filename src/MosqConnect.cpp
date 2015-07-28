@@ -84,14 +84,16 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
     free(messData);
 
     QString topic = QString(message->topic);
+    QString topicOut = QString("/starfader_status/");
 
     qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
                 QRegExp rxForce("fade (ON|OFF|AUTO) ([0-9]{1,})");
                 if (mess.compare("status") == 0)
                 {
-                    //pub(topicOut, wt.getForceStatus());
-                    //pub(topicOut, wt.getTimerString());
+                    QString mystatus;
+                    mystatus.sprintf("PWM status %3.3f",t->status);
+                    pub(topicOut,mystatus );
                 }
                 else if(rxForce.indexIn(mess) != -1)
                 {

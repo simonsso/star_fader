@@ -4,6 +4,7 @@
 targetvalues::targetvalues(){
     targettime=0;
     targetvalue=0;
+    status=0;
 }
 
 targetvalues::~targetvalues(){

@@ -5,6 +5,7 @@ class targetvalues{
     public:
         int targettime;
         int targetvalue;
+        double status;
     targetvalues();    
     ~targetvalues();
     void setT(int);
