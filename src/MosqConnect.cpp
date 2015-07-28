@@ -86,6 +86,21 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
 
     qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
+                QRegExp rxForce("force (ON|OFF|AUTO) ([0-9]{1,})");
+                if (mess.compare("status") == 0)
+                {
+                    pub(topicOut, wt.getForceStatus());
+                    pub(topicOut, wt.getTimerString());
+                }
+                else if(rxForce.indexIn(mess) != -1)
+                {
+                    qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2);
+                    
+                }
+                else
+                {
+                    
+                }
 }
 
 void MosqConnect::on_subscribe(int mid, int qos_count, const int *granted_qos)
