@@ -1,4 +1,5 @@
-CONFIG += qt debug
+#CONFIG += qt debug
+CONFIG += qt
 TEMPLATE = app
 TARGET =
 

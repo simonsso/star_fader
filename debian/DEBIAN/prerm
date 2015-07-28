@@ -1,0 +1,3 @@
+#!/bin/bash
+echo Stoping demon
+/etc/init.d/star_fader stop

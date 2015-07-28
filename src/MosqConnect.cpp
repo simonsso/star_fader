@@ -53,7 +53,7 @@ MosqConnect::MosqConnect(
 
 void MosqConnect::on_connect(int rc)
 {
-    printf("Connected with code %d.\n", rc);
+    printf("Connected with code %d.\nsubscribed -t /starfader/\n", rc);
     if(rc == 0){
         // Only attempt to subscribe on a successful connect.
 	subscribe(NULL,"/starfader/");
