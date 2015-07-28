@@ -29,12 +29,13 @@
 class MosqConnect : public mosqpp::mosquittopp
 {
     private:
-
+        class targetvalues *t;
     public:
         MosqConnect(
                 const char *id,
                 const char *host,
-                int port
+                int port,
+                class targetvalues *tgt
                 );
         ~MosqConnect();
 

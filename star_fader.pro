@@ -17,3 +17,9 @@ HEADERS += MosqConnect.h
 
 SOURCES += rpiPWM1.cpp
 HEADERS += rpiPWM1.h
+
+SOURCES += iowriter.cpp
+HEADERS += iowriter.h
+
+SOURCES += targetvalues.cpp
+HEADERS += targetvalues.h

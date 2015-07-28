@@ -40,11 +40,12 @@ MosqConnect::~MosqConnect()
 MosqConnect::MosqConnect(
         const char *id,
         const char *host,
-        int port
+        int port,
+        class targetvalues *tgt
         ) : mosquittopp(id)
 {
     int keepalive = 60;
-
+    t= tgt;
     // Connect immediately.
     connect(host, port, keepalive);
 };
