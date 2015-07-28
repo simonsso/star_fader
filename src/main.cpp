@@ -52,8 +52,7 @@ int main()
     t= new targetvalues();
     iow= new IOWriter(t);
 
-    qDebug() << "example";
-
+    iow->start();
     class MosqConnect *mqtt;
     int rc;
 

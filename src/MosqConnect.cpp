@@ -33,6 +33,7 @@
 #include <mosquittopp.h>
 
 #include "MosqConnect.h"
+#include "targetvalues.h"
 
 MosqConnect::~MosqConnect()
 {
@@ -86,16 +87,20 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
 
     qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
-                QRegExp rxForce("force (ON|OFF|AUTO) ([0-9]{1,})");
+                QRegExp rxForce("fade (ON|OFF|AUTO) ([0-9]{1,})");
                 if (mess.compare("status") == 0)
                 {
-                    pub(topicOut, wt.getForceStatus());
-                    pub(topicOut, wt.getTimerString());
+                    //pub(topicOut, wt.getForceStatus());
+                    //pub(topicOut, wt.getTimerString());
                 }
                 else if(rxForce.indexIn(mess) != -1)
                 {
-                    qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2);
-                    
+                    qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2) << rxForce.cap(2).toInt();
+                    if(0==rxForce.cap(1).compare("ON")){
+                        t->setT(rxForce.cap(2).toInt());
+                    } else if(0==rxForce.cap(1).compare("OFF")){
+                        t->setT(-rxForce.cap(2).toInt());
+                    }
                 }
                 else
                 {
