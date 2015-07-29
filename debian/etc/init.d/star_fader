@@ -22,6 +22,8 @@ DAEMON=/usr/sbin/$NAME
 #DAEMON_ARGS="--options args"
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
+LOCKFILE=/var/lock/subsys/${NAME}
+
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -41,20 +43,21 @@ SCRIPTNAME=/etc/init.d/$NAME
 #
 # Function that starts the daemon/service
 #
-do_start()
-{
-	# Return
-	#   0 if daemon has been started
-	#   1 if daemon was already running
-	#   2 if daemon could not be started
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
-		|| return 1
-	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
-		$DAEMON_ARGS \
-		|| return 2
-	# Add code here, if necessary, that waits for the process to be ready
-	# to handle requests from services started subsequently which depend
-	# on this one.  As a last resort, sleep for some time.
+do_start() {
+    echo -n "Starting $DAEMON : "
+    #daemon ${exe} # Not working ...
+    if [ -s ${PIDFILE} ]; then
+       RETVAL=1
+       echo -n "Already running !" && warning
+       echo
+    else
+       nohup ${DAEMON} >/dev/null 2>&1 &
+       RETVAL=$?
+       PID=$!
+       [ $RETVAL -eq 0 ] && touch ${LOCKFILE} && echo "OK" || echo "Yababadabababa doo"
+       echo
+       echo $PID > ${PIDFILE}
+    fi
 }
 
 #
