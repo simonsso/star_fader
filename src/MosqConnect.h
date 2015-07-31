@@ -25,17 +25,20 @@
 #define  __MOSQCONNECT_H
 
 #include <mosquittopp.h>
+#include "iowriter.h"
 
 class MosqConnect : public mosqpp::mosquittopp
 {
     private:
         class targetvalues *t;
+        class IOWriter *iow;
     public:
         MosqConnect(
                 const char *id,
                 const char *host,
                 int port,
-                class targetvalues *tgt
+                class targetvalues *tgt,
+                class IOWriter *iow
                 );
         ~MosqConnect();
 

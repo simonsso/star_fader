@@ -34,6 +34,7 @@
 
 #include "MosqConnect.h"
 #include "targetvalues.h"
+#include "iowriter.h"
 
 MosqConnect::~MosqConnect()
 {
@@ -42,11 +43,13 @@ MosqConnect::MosqConnect(
         const char *id,
         const char *host,
         int port,
-        class targetvalues *tgt
+        class targetvalues *tgt,
+        class IOWriter *myiow
         ) : mosquittopp(id)
 {
     int keepalive = 60;
     t= tgt;
+    iow=myiow;
     // Connect immediately.
     connect(host, port, keepalive);
 };
@@ -88,6 +91,7 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
 
     //qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
+                QRegExp rxDuty("dutycycle ([0-9]{1,4})");
                 QRegExp rxFade("fade (ON|OFF|AUTO) ([0-9]{1,})(/([1-9][0-9]*))?");
                 if (mess.compare("status") == 0)
                 {
@@ -108,9 +112,12 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
                     // Call with 0 will set divider 
                     t->setDiv(rxFade.cap(4).toInt());
                 }
+                else if(rxDuty.indexIn(mess) != -1)
+                {
+                   iow->setDutyCycle(rxDuty.cap(1).toInt());
+                }
                 else
                 {
-                    
                 }
 }
 
