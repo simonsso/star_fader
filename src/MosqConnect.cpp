@@ -88,21 +88,25 @@ void MosqConnect::on_message(const struct mosquitto_message *message)
 
     //qDebug() << "New message:" << (QDateTime::currentDateTime()).toString("hh:mm:ss") << topic << mess;
 
-                QRegExp rxForce("fade (ON|OFF|AUTO) ([0-9]{1,})");
+                QRegExp rxFade("fade (ON|OFF|AUTO) ([0-9]{1,})(/([1-9][0-9]*))?");
                 if (mess.compare("status") == 0)
                 {
                     QString mystatus;
-                    mystatus.sprintf("PWM status %3.3f",t->status);
+                    mystatus.sprintf("PWM=%3.3f%%",t->status);
                     pub(topicOut,mystatus );
                 }
-                else if(rxForce.indexIn(mess) != -1)
+                else if(rxFade.indexIn(mess) != -1)
                 {
-                    //qDebug() << "Force" << rxForce.cap(1) << rxForce.cap(2) << rxForce.cap(2).toInt();
-                    if(0==rxForce.cap(1).compare("ON")){
-                        t->setT(rxForce.cap(2).toInt());
-                    } else if(0==rxForce.cap(1).compare("OFF")){
-                        t->setT(-rxForce.cap(2).toInt());
+                    //qDebug() << "Force" << rxFade.cap(1) << rxFade.cap(2) << rxFade.cap(2).toInt();
+                    if(0==rxFade.cap(1).compare("ON")){
+                        t->setT(rxFade.cap(2).toInt());
+                    } else if(0==rxFade.cap(1).compare("OFF")){
+                        t->setT(-rxFade.cap(2).toInt());
                     }
+                    qDebug()<<rxFade.cap(3)<<rxFade.cap(4);
+                    // If divider is present Set it
+                    // Call with 0 will set divider 
+                    t->setDiv(rxFade.cap(4).toInt());
                 }
                 else
                 {

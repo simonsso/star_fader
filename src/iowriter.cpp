@@ -26,9 +26,6 @@ void IOWriter::run(){
 
         pwm.setDutyCycleCount(dutycycle);
         t->status=pwm.getDutyCycle();
-        //printf("Duty Cycle is %3.2lf %d\n",pwm.getDutyCycle(),dutycycle);
-        //printf("Divisor is %d\n", pwm.getDivisor());
-        usleep(50000);
-
+        usleep(50000*t->getDiv());
     }
 }
