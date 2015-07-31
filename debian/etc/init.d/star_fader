@@ -22,7 +22,7 @@ DAEMON=/usr/sbin/$NAME
 #DAEMON_ARGS="--options args"
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
-LOCKFILE=/var/lock/subsys/${NAME}
+LOCKFILE=/var/lock/${NAME}
 
 SCRIPTNAME=/etc/init.d/$NAME
 
