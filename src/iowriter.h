@@ -4,6 +4,7 @@
 #include <QDate>
 #include <QTime>
 #include <QThread>
+#include <QMutex>
 
 
 #ifndef  __IOWRITER_H
@@ -17,7 +18,10 @@ class IOWriter : public QThread
 public:
     IOWriter(class targetvalues *tgt);
     ~IOWriter();
+    void setDutyCycle(int);
 private:
+    int dutycycle;
+    QMutex mutex;
     void run();
 };
 

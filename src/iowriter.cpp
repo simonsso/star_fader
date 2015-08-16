@@ -1,22 +1,31 @@
 #include "iowriter.h"
 #include "targetvalues.h"
 #include "rpiPWM1.h"
+#include <QMutex>
 #include <QDebug>
 
 IOWriter::IOWriter(class targetvalues *tgt){
     t=tgt;
-    internal = new targetvalues();
+    dutycycle=0;
 }
 IOWriter::~IOWriter(){
 }
+// Set dutycycle raw - TODO: caller should not need to know internal max
+void IOWriter::setDutyCycle(int dc){
+   mutex.lock();
+   dutycycle=dc;
+   mutex.unlock();
+}
+
 void IOWriter::run(){
     //TODO use targetvalue as increment give maxint to force on now.
-    int dutycycle=0;
     rpiPWM1 pwm(100.0, 8192, 1e-5, rpiPWM1::MSMODE);
     pwm.setDutyCycleCount(0);
 
     //loop forever
     while(1){
+        mutex.lock();
+        int sleeptimer=t->getDiv();
         dutycycle+=t->getT();
         if(dutycycle <0 ){
             dutycycle=0; //Zero
@@ -26,9 +35,7 @@ void IOWriter::run(){
 
         pwm.setDutyCycleCount(dutycycle);
         t->status=pwm.getDutyCycle();
-        //printf("Duty Cycle is %3.2lf %d\n",pwm.getDutyCycle(),dutycycle);
-        //printf("Divisor is %d\n", pwm.getDivisor());
-        usleep(50000);
-
+        mutex.unlock();
+        usleep(50000*sleeptimer);
     }
 }
