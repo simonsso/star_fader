@@ -3,7 +3,9 @@
 Connect a pwm output from a Raspberry PI to a mqtt network.
 accept commands on topic /starfader/ 
    fade ON/OFF <int>
+   dutycycle   <uint>
    status
+
 replies
   topic /starfader_status/
   current output %
